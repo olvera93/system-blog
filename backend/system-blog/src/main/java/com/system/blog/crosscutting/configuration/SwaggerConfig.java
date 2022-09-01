@@ -15,7 +15,7 @@ public class SwaggerConfig {
 	    return new OpenAPI()
 	    	.info(new Info().title("Blog sAPI")
 	        .description("This service exposes all endpoints necessary to obtain information from the database related to blog.")
-	        .version("v0.0.1"))
+	        .version("v0.0.2"))
 	        .externalDocs(new ExternalDocumentation()
 	        .description("springdoc-openapi")
 	        .url("http://springdoc.org"));

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +26,7 @@ import com.system.blog.business.model.Publication;
 import com.system.blog.crosscutting.errormanagement.ErrorManager;
 import com.system.blog.provide.dto.PageResultDto;
 import com.system.blog.provide.dto.PublicationDto;
+import com.system.blog.provide.dto.PublicationDtoCreate;
 import com.system.blog.provide.dto.ResponseStatusErrorDto;
 import com.system.blog.utilities.ConstansApp;
 
@@ -53,11 +55,12 @@ public class PublicationController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Publication created"),
 			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))),
 			@ApiResponse(responseCode = "500", description = "Error while creating a publication", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))) })
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(produces = { "application/json" })
-	public ResponseEntity<PublicationDto> create(@RequestBody @Valid PublicationDto publicationDto) {
+	public ResponseEntity<PublicationDtoCreate> create(@RequestBody @Valid PublicationDtoCreate publicationDto) {
 
 		try {
-			PublicationDto result = publicationService.createPublication(publicationDto);
+			PublicationDtoCreate result = publicationService.createPublication(publicationDto);
 			return ResponseEntity.status(HttpStatus.CREATED).body(result);
 
 		} catch (Exception e) {
@@ -109,6 +112,7 @@ public class PublicationController {
 			@ApiResponse(responseCode = "400", description = "Data provided for update publication is invalid", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))),
 			@ApiResponse(responseCode = "404", description = "Publication not found", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))),
 			@ApiResponse(responseCode = "500", description = "Error while updating publication", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))) })
+	@PreAuthorize("hasRole('ADMIN')")
 	@PatchMapping(path = "/{id}", produces = { "application/json" })
 	public ResponseEntity<PublicationDto> updatePublication(
 			@Parameter(name = "id", description = "publication id", example = "1", required = true) @PathVariable(name = "id", required = true) long id,
@@ -127,6 +131,7 @@ public class PublicationController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "204", description = "Publication deleted successfully"),
 			@ApiResponse(responseCode = "404", description = "Publication not found", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))),
 			@ApiResponse(responseCode = "500", description = "Error while delete publication", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))) })
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> deletePublication(@PathVariable(name = "id", required = true) long id) {
 		try {

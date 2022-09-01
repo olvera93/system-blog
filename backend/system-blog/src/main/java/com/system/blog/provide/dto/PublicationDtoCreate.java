@@ -1,7 +1,5 @@
 package com.system.blog.provide.dto;
 
-
-
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -16,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublicationDto {
+public class PublicationDtoCreate {
 	
-	private Long id;
+private Long id;
 	
 	@NotBlank(message = "field requeried title")
 	@Size(min = 2, message = "The title must have 2 characters")
@@ -30,8 +28,5 @@ public class PublicationDto {
 	
 	@NotBlank(message = "field requeried content")
 	private String content; 
-	
-	private List<CommentDto> comments;
-	
 
 }
