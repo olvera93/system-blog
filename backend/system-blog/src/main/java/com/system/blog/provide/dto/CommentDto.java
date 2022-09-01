@@ -2,6 +2,7 @@ package com.system.blog.provide.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class CommentDto {
 	private String email;
 	
 	@NotBlank(message = "field requeried body")
+	@Size(min = 10, message = "The body must have 10 characters")
 	private String body;
 	
 }

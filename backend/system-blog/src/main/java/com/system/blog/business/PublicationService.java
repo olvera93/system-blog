@@ -18,6 +18,7 @@ import com.system.blog.crosscutting.errormanagement.ResourceNotFoundException;
 import com.system.blog.persistence.PublicationRepository;
 import com.system.blog.provide.dto.PageResultDto;
 import com.system.blog.provide.dto.PublicationDto;
+import com.system.blog.provide.dto.PublicationDtoCreate;
 
 @Service
 public class PublicationService {
@@ -33,7 +34,7 @@ public class PublicationService {
 	 * @param publicationDto
 	 * @return publication
 	 */
-	public PublicationDto createPublication(PublicationDto publicationDto) {
+	public PublicationDtoCreate createPublication(PublicationDtoCreate publicationDto) {
 		
 		Publication publication = Publication.builder()
 				.title(publicationDto.getTitle())
@@ -43,7 +44,7 @@ public class PublicationService {
 		
 		publication = publicationRepository.save(publication);
 		
-		return modelMapper.map(publication, PublicationDto.class);
+		return modelMapper.map(publication, PublicationDtoCreate.class);
 		
 	}
 	
