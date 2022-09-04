@@ -39,7 +39,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/v1/api/publications")
+@RequestMapping("/api/publications")
 @Tag(name = "Publication")
 @CrossOrigin(origins = "*")
 @Validated

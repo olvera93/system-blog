@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/api")
 @Tag(name = "Comment")
 @CrossOrigin(origins = "*")
 @Validated

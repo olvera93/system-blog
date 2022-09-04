@@ -21,7 +21,13 @@ spring:
       pageable:
         max-page-size: 2147483647
     
-    
+
+#JWT properties
+jwt:
+  secret: JWTSecretKey
+  expiration: 604800000
+
+
 server:
   port: 8098
   error:
@@ -33,3 +39,4 @@ server:
     enabled: true
     mime-types: text/html,text/plain,text/css,application/javascript,application/json
     min-response-size: 1024
+  
