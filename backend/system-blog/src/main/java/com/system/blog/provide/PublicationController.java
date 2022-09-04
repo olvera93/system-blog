@@ -73,14 +73,14 @@ public class PublicationController {
 			@ApiResponse(responseCode = "404", description = "Not found", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))),
 			@ApiResponse(responseCode = "500", description = "Error while retrieve all publications", content = @Content(schema = @Schema(implementation = ResponseStatusErrorDto.class))) })
 	@GetMapping(produces = { "application/json" })
-	public ResponseEntity<PageResultDto<Publication>> retrieveAllPublications(
+	public ResponseEntity<PageResultDto<PublicationDto>> retrieveAllPublications(
 			@Parameter(name = "pageNumber", description = "Page to retrieve (>=0)", example = "0", required = false) @RequestParam(value = "pageNumber", defaultValue = ConstansApp.DEFAULT_PAGE_NUMBER, required = false) int pageNumber,
 			@Parameter(name = "pageSize", description = "Number of maximum logs per page (>0)", example = "10", required = false) @RequestParam(value = "pageSize", defaultValue = ConstansApp.DEFAULT_PAGE_SIZE, required = false) int pageSize,
 			@Parameter(name = "sortBy", description = "Sort the publucations by ", example = "id", required = false) @RequestParam(value = "sortBy", defaultValue = ConstansApp.DEFAULT_ORDER_BY, required = false) String sortBy,
 			@Parameter(name = "sortDir", description = "Sort dir ", example = "asc", required = false) @RequestParam(value = "sortDir", defaultValue = ConstansApp.DEFAULT_ORDER_BY_DIR, required = false) String sortDir) {
 
 		try {
-			PageResultDto<Publication> result = publicationService.getAllPublications(pageNumber, pageSize, sortBy,
+			PageResultDto<PublicationDto> result = publicationService.getAllPublications(pageNumber, pageSize, sortBy,
 					sortDir);
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 
