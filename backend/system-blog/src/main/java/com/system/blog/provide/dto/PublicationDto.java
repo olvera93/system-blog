@@ -1,7 +1,6 @@
 package com.system.blog.provide.dto;
 
-
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;

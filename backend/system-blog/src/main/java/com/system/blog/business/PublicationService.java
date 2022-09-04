@@ -52,26 +52,28 @@ public class PublicationService {
 	 * Retrieve all publications
 	 * @return retrieve a list of publications
 	 */
-	public PageResultDto<Publication> getAllPublications(int pageNumber, int pageSize, String sortBy, String sortDir) {
+	public PageResultDto<PublicationDto> getAllPublications(int pageNumber, int pageSize, String sortBy, String sortDir) {
 		
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
 		
-		PageResultDto<Publication> pageResultDto = new PageResultDto<>();
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 		
 		Page<Publication> publications = publicationRepository.findAll(pageable);
 		
 		List<Publication> listPublications = publications.getContent();
-		listPublications.stream().map(publication -> modelMapper.map(publication, PublicationDto.class)).collect(Collectors.toList());
 		
-		pageResultDto.setCurrentPage(publications.getNumber()); // create page information
-		pageResultDto.setResultsInPage(publications.getNumberOfElements());
-		pageResultDto.setTotalPages(publications.getTotalPages());
-		pageResultDto.setTotalResults(publications.getTotalElements());
-		pageResultDto.setLastPage(publications.isLast());
-		pageResultDto.setResults(listPublications);
+		List<PublicationDto> contain = listPublications.stream().map(publication -> modelMapper.map(publication, PublicationDto.class)).collect(Collectors.toList());
+
+		PageResultDto<PublicationDto> pageResult = new PageResultDto<>();
+
+		pageResult.setCurrentPage(publications.getNumber()); // create page information
+		pageResult.setResultsInPage(publications.getNumberOfElements());
+		pageResult.setTotalPages(publications.getTotalPages());
+		pageResult.setTotalResults(publications.getTotalElements());
+		pageResult.setLastPage(publications.isLast());
+		pageResult.setResults(contain);
 		
-		return pageResultDto;
+		return pageResult;
 	}
 	
 	/**
