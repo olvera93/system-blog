@@ -1,9 +1,7 @@
 package com.system.blog.provide;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +26,11 @@ import com.system.blog.persistence.RoleRepository;
 import com.system.blog.persistence.UserRepository;
 import com.system.blog.provide.dto.LoginDto;
 import com.system.blog.provide.dto.RegisterDto;
+import com.system.blog.security.JwtTokenProvider;
 
 
 @RestController
-@RequestMapping("/v1/api/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 @Validated
 public class AuthController {
@@ -52,15 +50,20 @@ public class AuthController {
 	@Autowired 
 	private PasswordEncoder passwordEncoder;
 	
-
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+	
 	@PostMapping(path = "/login", produces = { "application/json" })
 	public ResponseEntity<String> authenticateUse(@RequestBody LoginDto loginDto) {
 
 		try {
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			String token = jwtTokenProvider.generateToken(authentication);
 			
-			return ResponseEntity.status(HttpStatus.OK).body("Login Successfully");
+			System.out.println("TOKEN: "+token);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(token);
 
 
 		} catch (Exception e) {
