@@ -25,7 +25,7 @@ public class SwaggerConfig {
 		                        .in(SecurityScheme.In.HEADER).name("Authorization")))
 	    	.info(new Info().title("Blog sAPI")
 	        .description("This service exposes all endpoints necessary to obtain information from the database related to blog.")
-	        .version("v0.0.4"))
+	        .version("v0.1.0"))
 	        .externalDocs(new ExternalDocumentation()
 	        .description("springdoc-openapi")
 	        .url("http://springdoc.org"))
